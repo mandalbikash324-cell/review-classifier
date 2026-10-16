@@ -2,6 +2,13 @@
 
 A Streamlit demo for multimodal e-commerce review classification. It combines review text with an optional product image, then returns sentiment (`GOOD`, `NEUTRAL`, or `BAD`), a visible-defect flag, a text-image mismatch flag, and a short evidence-based explanation. If no image is uploaded, the app performs text-only classification.
 
+## Live links
+
+- Interactive classifier: [Open Review Lens](https://review-classifier-inwgozhfxisaxxummuwaz3.streamlit.app/)
+- Static project requirements: [Open the PRD on GitHub Pages](https://mandalbikash324-cell.github.io/review-classifier/)
+
+The Streamlit app is connected to this repository's `main` branch and `app.py`; pushes to the branch are deployed by Streamlit Community Cloud. GitHub Pages automatically publishes the static PRD when changes are pushed to `main`.
+
 ## Requirements
 
 - Python 3.10 or newer
