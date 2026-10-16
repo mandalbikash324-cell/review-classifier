@@ -80,6 +80,13 @@ if classify_clicked:
         sentiment_colors = {"GOOD": "green", "NEUTRAL": "orange", "BAD": "red"}
         with st.container(border=True):
             st.subheader("Analysis results", icon=":material/insights:")
+            if uploaded_image is not None:
+                st.badge(
+                    f"Detected product: {result.product_type}",
+                    icon=":material/category:",
+                    color="blue",
+                )
+                st.space("small")
             st.badge(
                 f"{result.sentiment} sentiment",
                 icon=":material/mood:",

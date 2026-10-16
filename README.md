@@ -1,6 +1,6 @@
 # Review Lens
 
-A Streamlit demo for multimodal e-commerce review classification. It combines review text with an optional product image, then returns sentiment (`GOOD`, `NEUTRAL`, or `BAD`), a visible-defect flag, a text-image mismatch flag, and a short evidence-based explanation. If no image is uploaded, the app performs text-only classification.
+A Streamlit demo for multimodal e-commerce review classification. It combines review text with an optional product image, automatically identifies the visible product category from an image, then returns sentiment (`GOOD`, `NEUTRAL`, or `BAD`), a visible-defect flag, a text-image mismatch flag, and a short evidence-based explanation. It accepts any consumer product category without a category selector. If no image is uploaded, the app performs text-only classification.
 
 ## Live links
 
@@ -10,7 +10,7 @@ A Streamlit demo for multimodal e-commerce review classification. It combines re
 
 The Streamlit app is connected to this repository's `main` branch and `app.py`; pushes to the branch are deployed by Streamlit Community Cloud. GitHub Pages automatically publishes the static PRD when changes are pushed to `main`.
 
-To enable classification in the deployed app, open its **App settings → Secrets** in Streamlit Community Cloud and add the key for the selected provider, for example `OPENAI_API_KEY = "your-key"`. Keep API keys in Streamlit Secrets or a local `.env` file; never commit real credentials. Enter the review, optionally upload an image, and select **Detect and classify** to send one analysis request.
+To enable classification in the deployed app, open its **App settings → Secrets** in Streamlit Community Cloud and add the key for the selected provider, for example `OPENAI_API_KEY = "your-key"`. Keep API keys in Streamlit Secrets or a local `.env` file; never commit real credentials. Enter the review, optionally upload an image, and select **Detect and classify** to send one analysis request. When an image is present, the app identifies a generic product category from the image and shows it in the results. Without an image it identifies sentiment from text but cannot identify the product visually.
 
 ## Requirements
 

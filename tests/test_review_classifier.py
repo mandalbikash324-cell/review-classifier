@@ -52,6 +52,7 @@ def test_prepare_image_rejects_oversized_and_unsupported_images() -> None:
 def test_parse_model_response_accepts_valid_multimodal_result() -> None:
     response = json.dumps(
         {
+            "product_type": "Over-ear headphones",
             "sentiment": "good",
             "defect_detected": False,
             "visual_text_mismatch": False,
@@ -60,12 +61,40 @@ def test_parse_model_response_accepts_valid_multimodal_result() -> None:
     )
     result = parse_model_response(response, image_attached=True)
     assert result.sentiment == "GOOD"
+    assert result.product_type == "Over-ear headphones"
     assert result.defect_detected is False
+
+
+def test_parse_model_response_requires_product_type_when_image_is_attached() -> None:
+    response = json.dumps(
+        {
+            "sentiment": "GOOD",
+            "defect_detected": False,
+            "visual_text_mismatch": False,
+            "reasoning": "The review is positive.",
+        }
+    )
+    with pytest.raises(ValueError, match="identify the product category"):
+        parse_model_response(response, image_attached=True)
+
+
+def test_parse_model_response_marks_product_unidentified_without_image() -> None:
+    response = json.dumps(
+        {
+            "sentiment": "NEUTRAL",
+            "defect_detected": False,
+            "visual_text_mismatch": False,
+            "reasoning": "The review is neutral.",
+        }
+    )
+    result = parse_model_response(response, image_attached=False)
+    assert result.product_type == "Not identified (no image provided)"
 
 
 def test_parse_model_response_rejects_non_boolean_flags() -> None:
     response = json.dumps(
         {
+            "product_type": "Headphones",
             "sentiment": "BAD",
             "defect_detected": "false",
             "visual_text_mismatch": False,
