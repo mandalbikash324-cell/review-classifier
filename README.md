@@ -57,6 +57,12 @@ streamlit run app.py
 
 Open the local URL printed by Streamlit, normally `http://localhost:8501`. Enter a review, optionally add a JPG/PNG image (up to the configured limit), then select **Classify review**.
 
+## GitHub Pages
+
+The GitHub Pages workflow publishes `PRD.html` as the static site homepage when changes are pushed to `main`, or when the workflow is run manually. The page is available at `https://mandalbikash324-cell.github.io/review-classifier/` after the first successful deployment.
+
+GitHub Pages cannot run the interactive Streamlit classifier or its Python API requests. Use a Python hosting platform such as Streamlit Community Cloud to publish the full application.
+
 ## Configuration
 
 | Variable | Default | Description |
