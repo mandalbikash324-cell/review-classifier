@@ -62,7 +62,7 @@ with st.container(border=True):
             st.image(uploaded_image, caption=uploaded_image.name, width="stretch")
 
     classify_clicked = st.button(
-        "Analyze review",
+        "Detect and classify",
         type="primary",
         icon=":material/search:",
         width="stretch",

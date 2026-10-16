@@ -10,6 +10,8 @@ A Streamlit demo for multimodal e-commerce review classification. It combines re
 
 The Streamlit app is connected to this repository's `main` branch and `app.py`; pushes to the branch are deployed by Streamlit Community Cloud. GitHub Pages automatically publishes the static PRD when changes are pushed to `main`.
 
+To enable classification in the deployed app, open its **App settings → Secrets** in Streamlit Community Cloud and add the key for the selected provider, for example `OPENAI_API_KEY = "your-key"`. Keep API keys in Streamlit Secrets or a local `.env` file; never commit real credentials. Enter the review, optionally upload an image, and select **Detect and classify** to send one analysis request.
+
 ## Requirements
 
 - Python 3.10 or newer

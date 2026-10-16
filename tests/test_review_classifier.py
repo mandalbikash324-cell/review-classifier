@@ -93,7 +93,7 @@ def test_settings_require_key_for_selected_provider(monkeypatch: pytest.MonkeyPa
     monkeypatch.setenv("LLM_PROVIDER", "gemini")
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     config = Settings.from_env()
-    with pytest.raises(ValueError, match="GEMINI_API_KEY"):
+    with pytest.raises(ValueError, match="GEMINI_API_KEY.*Streamlit Cloud.*Secrets"):
         config.require_api_key()
 
 

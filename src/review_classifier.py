@@ -107,7 +107,10 @@ class Settings:
         }
         api_key, key_name = key_names[self.provider]
         if not api_key:
-            raise ValueError(f"Add your {key_name} to .env before classifying a review.")
+            raise ValueError(
+                f"Configure {key_name} in Streamlit Cloud under app Settings → Secrets, "
+                "or add it to your local .env file before classifying a review."
+            )
         return api_key
 
 
