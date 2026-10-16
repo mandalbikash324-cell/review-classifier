@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Requirements Document | Multimodal E-Commerce Review Classification</title>
+<style>
+@page { size: A4; margin: 19mm 18mm 20mm; }
+:root { --ink: #1d2935; --muted: #526373; --teal: #087e78; --line: #cfdbdf; --wash: #edf5f4; --accent: #d5a348; }
+* { box-sizing: border-box; }
+body { margin: 0 auto; color: var(--ink); font: 10.5pt/1.48 -apple-system, BlinkMacSystemFont, "Aptos", "Segoe UI", sans-serif; }
+header { padding: 26mm 0 13mm; border-bottom: 3px solid var(--teal); margin-bottom: 10mm; }
+.eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: 1.5px; font-size: 9pt; font-weight: 700; }
+h1 { font-size: 29pt; line-height: 1.12; margin: 8mm 0 5mm; letter-spacing: 0; }
+.subtitle { max-width: 145mm; color: var(--muted); font-size: 13pt; }
+.metadata { border-collapse: collapse; margin-top: 13mm; width: 100%; }
+.metadata td { border-top: 1px solid var(--line); padding: 3mm 2mm; }
+.metadata td:first-child { width: 36mm; color: var(--muted); font-weight: 700; }
+h2 { font-size: 16pt; margin: 10mm 0 4mm; padding-bottom: 2mm; border-bottom: 1px solid var(--line); color: var(--teal); page-break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 5mm 0 2mm; page-break-after: avoid; }
+p { margin: 2.5mm 0; }
+ul, ol { padding-left: 6mm; margin: 2mm 0 4mm; }
+li { margin: 1.4mm 0; }
+table.data { width: 100%; border-collapse: collapse; margin: 3mm 0 6mm; font-size: 9.2pt; }
+table.data th { background: var(--wash); color: var(--ink); text-align: left; }
+table.data th, table.data td { border: 1px solid var(--line); padding: 2.4mm 2.6mm; vertical-align: top; }
+table.data tr { page-break-inside: avoid; }
+.tag { color: var(--teal); font-weight: 700; }
+.callout { background: var(--wash); border-left: 3px solid var(--teal); padding: 3mm 4mm; margin: 3mm 0 5mm; }
+footer { margin-top: 12mm; border-top: 1px solid var(--line); padding-top: 3mm; font-size: 8.5pt; color: var(--muted); }
+@media print { header { padding-top: 12mm; } h2 { page-break-after: avoid; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Product Requirements Document</div>
+  <h1>Multimodal E-Commerce Review Classification</h1>
+  <div class="subtitle">Optimizing Sentiment Analysis Using Vision-Language APIs</div>
+  <table class="metadata">
+    <tr><td>Document version</td><td>1.0</td></tr>
+    <tr><td>Target platform</td><td>Web demo (Streamlit or Gradio) with API backend</td></tr>
+    <tr><td>Project type</td><td>Final-year academic project</td></tr>
+  </table>
+</header>
+
+<main>
+<section>
+<h2>1. Executive Summary</h2>
+<p>Traditional sentiment analysis relies solely on text, which can fail in e-commerce settings where physical product context matters. A review stating “The screen is huge” may be positive for a television but negative for a smartphone. Text alone also cannot verify a reported physical defect or determine whether an uploaded image supports the review.</p>
+<p>This project proposes a multimodal classification system that uses a vision-language API, such as OpenAI GPT-4o Vision or Gemini 1.5 Pro, to analyze customer review text and an optional product image together. The system classifies sentiment as <strong>GOOD</strong>, <strong>NEUTRAL</strong>, or <strong>BAD</strong>, detects visible defects, and assesses whether the image aligns with the text claims.</p>
+</section>
+
+<section>
+<h2>2. System Architecture and Technology Stack</h2>
+<table class="data">
+<thead><tr><th>Layer</th><th>Technology / responsibility</th></tr></thead>
+<tbody>
+<tr><td>Frontend / UI</td><td>Streamlit or Gradio interface for review text and image upload.</td></tr>
+<tr><td>Multimodal engine</td><td>Vision-language LLM API (for example, GPT-4o Vision or Gemini 1.5 Pro).</td></tr>
+<tr><td>Backend logic</td><td>Python 3.10+ for prompt orchestration, API calls, validation, and JSON parsing.</td></tr>
+<tr><td>Data processing</td><td>Text sanitization, image resizing, Base64 encoding, and structured prompt templating.</td></tr>
+<tr><td>Evaluation</td><td>Scikit-learn for classification reports, macro F1, and confusion matrices against a labeled test set.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>3. Target Use Cases</h2>
+<ul>
+<li><strong>Sentiment classification:</strong> Classify a review as GOOD, NEUTRAL, or BAD using the combined context of its text and product photo.</li>
+<li><strong>Defect and claim verification:</strong> Assess whether an uploaded image visibly supports a complaint, such as a claim that an item is broken.</li>
+<li><strong>Visual-text mismatch detection:</strong> Flag a review whose image appears unrelated to the text, such as a positive shoe review accompanied by an unrelated product image.</li>
+</ul>
+</section>
+
+<section>
+<h2>4. Functional Requirements</h2>
+<table class="data">
+<thead><tr><th>ID</th><th>Feature</th><th>Description</th><th>Priority</th></tr></thead>
+<tbody>
+<tr><td>FR1</td><td>Multimodal input handling</td><td>Accept review text of up to 500 words and an optional JPG or PNG image up to 5 MB. Support text and image together.</td><td>High</td></tr>
+<tr><td>FR2</td><td>Image preprocessing</td><td>Resize images to optimize API payload size and encode them as Base64 when required by the provider.</td><td>High</td></tr>
+<tr><td>FR3</td><td>Zero-shot prompt engineering</td><td>Supply a structured prompt that instructs the API to act as an e-commerce review classifier and evaluate text and image evidence.</td><td>High</td></tr>
+<tr><td>FR4</td><td>Three-class sentiment output</td><td>Return a validated structured JSON response with sentiment exactly one of GOOD, NEUTRAL, or BAD.</td><td>High</td></tr>
+<tr><td>FR5</td><td>Visual defect flagging</td><td>Include a boolean <code>defect_detected</code> field based on visible image evidence; do not infer an unseen defect.</td><td>Medium</td></tr>
+<tr><td>FR6</td><td>Reasoning extraction</td><td>Return a brief <code>reasoning</code> string citing relevant textual and visual evidence, when available.</td><td>Medium</td></tr>
+<tr><td>FR7</td><td>Visual-text mismatch flagging</td><td>Include a boolean <code>visual_text_mismatch</code> field indicating whether the image appears inconsistent with the product or claims in the review.</td><td>Medium</td></tr>
+</tbody>
+</table>
+<div class="callout"><strong>Response contract:</strong> <code>{"sentiment":"GOOD|NEUTRAL|BAD","defect_detected":true,"visual_text_mismatch":false,"reasoning":"Brief evidence-based explanation."}</code>. Boolean values are examples; the API must return values supported by its analysis.</div>
+</section>
+
+<section>
+<h2>5. Non-Functional Requirements</h2>
+<table class="data">
+<thead><tr><th>Requirement</th><th>Target</th><th>Verification</th></tr></thead>
+<tbody>
+<tr><td>Classification quality</td><td>Macro F1-score greater than 0.85 on a defined multimodal test dataset, with performance compared against a text-only baseline.</td><td>Evaluate on held-out labeled examples; report dataset size, class balance, and per-class metrics.</td></tr>
+<tr><td>Latency</td><td>End-to-end classification response within 3.5 seconds.</td><td>Measure elapsed time across representative requests and report observed distribution; API latency may vary.</td></tr>
+<tr><td>Robustness</td><td>Handle missing inputs gracefully. In particular, classify text-only reviews without an image.</td><td>Test text-only requests, invalid files, and malformed or incomplete API responses.</td></tr>
+<tr><td>Cost efficiency</td><td>Keep API execution cost below $0.01 per review during testing.</td><td>Record provider, model, token/image usage, and contemporaneous pricing for each evaluation run.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>6. Pipeline Workflow</h2>
+<ol>
+<li><strong>Ingestion:</strong> The user enters review text and optionally uploads a product image.</li>
+<li><strong>Formatting:</strong> The backend validates input limits, sanitizes text, resizes the image, and encodes it for the selected API.</li>
+<li><strong>Inference request:</strong> The backend submits the prompt and available modalities with instructions for structured output.</li>
+<li><strong>Vision-language processing:</strong> The model analyzes sentiment, visible defects, and image-text consistency, cross-referencing claims such as “shattered” with visible evidence.</li>
+<li><strong>Output parsing:</strong> The backend validates the response fields and allowed sentiment values, handling invalid responses safely.</li>
+<li><strong>Display:</strong> The UI presents the sentiment, defect and mismatch flags, and concise reasoning.</li>
+</ol>
+</section>
+
+<section>
+<h2>7. Academic Evaluation and Benchmarking</h2>
+<ul>
+<li><strong>Ablation study:</strong> Compare text-only classification, image-only analysis where labels permit, and multimodal text-plus-image classification.</li>
+<li><strong>Confusion matrices:</strong> Compare class-level errors and examine whether multimodal evidence helps distinguish NEUTRAL from BAD compared with the text-only baseline.</li>
+<li><strong>Cost-benefit analysis:</strong> Document financial and computational trade-offs between API-based multimodal inference and a local CNN-plus-LSTM approach.</li>
+</ul>
+<p>Evaluation results depend on the dataset, model, prompt, and provider. The accuracy, latency, and cost targets are project objectives to be measured, not assumed outcomes.</p>
+</section>
+
+<section>
+<h2>8. Project Deliverables</h2>
+<table class="data">
+<thead><tr><th>Deliverable</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Source code</td><td>Python backend and web UI hosted on GitHub.</td></tr>
+<tr><td>Evaluation notebook</td><td>Jupyter notebook that evaluates the dataset through the API and generates accuracy, macro F1, classification reports, and graphs.</td></tr>
+<tr><td>Live demo</td><td>Locally runnable Streamlit web application.</td></tr>
+<tr><td>Final report</td><td>Academic report describing the limitations of text-only pipelines, the multimodal API approach, and measured benchmark results.</td></tr>
+</tbody>
+</table>
+</section>
+</main>
+<footer>Multimodal E-Commerce Review Classification · Product Requirements Document · Version 1.0</footer>
+</body>
+</html>
